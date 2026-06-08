@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
 
-const NotesClientWithProps: ComponentType<{ tag?: string }> = NotesClient;
+const NotesClientWithProps = NotesClient as ComponentType<{ tag?: string }>;
 
 interface NotesProps {
   params: Promise<{ slug: string[] }>;
