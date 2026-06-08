@@ -11,7 +11,6 @@ const API_TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 console.log(API_TOKEN);
 const buildFetchConfig = (params?: Record<string, string | number>) => ({
   params,
-  accept: "application/json",
   headers: {
     Authorization: `Bearer ${API_TOKEN}`,
   },
@@ -28,13 +27,12 @@ async function noteFetch(
     params.search = search.trim();
   }
 
-  const response = await axios.get<NotesResponse>(BASE_URL, {
-    params: { page, perPage: 8, search, tag: tag || undefined },
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${API_TOKEN}`,
-    },
-  });
+ const response = await axios.get<NotesResponse>(BASE_URL, {
+  params: { page, perPage, search, tag: tag || undefined }, // ← perPage замість 8
+  headers: {
+    Authorization: `Bearer ${API_TOKEN}`,
+  },
+});
   console.log(response.data);
   return response.data;
 }
