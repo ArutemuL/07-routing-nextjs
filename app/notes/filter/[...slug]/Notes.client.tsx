@@ -14,7 +14,11 @@ import Loader from "@/app/loading";
 import ErrorMessage from "@/app/notes/filter/[...slug]/error";
 import NoteList from "@/components/NoteList/NoteList";
 
-export default function NotesClient() {
+interface NotesClientProps {
+  tag: string;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -26,8 +30,8 @@ export default function NotesClient() {
   });
 
   const { data, isLoading, isError, isSuccess, error } = useQuery({
-    queryKey: ["noteHubKey", debouncedSearch, page],
-    queryFn: () => noteFetch(debouncedSearch, page),
+    queryKey: ["noteHubKey", debouncedSearch, page, tag],
+    queryFn: () => noteFetch(debouncedSearch, page, undefined, tag),
     placeholderData: keepPreviousData,
   });
   const notes = data?.notes ?? [];
